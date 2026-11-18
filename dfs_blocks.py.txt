@@ -1,0 +1,46 @@
+
+def dfs():
+
+    start = (("B", "C", "D", "A"), (), (), ())
+    goal = (("A", "B", "C", "D"), (), (), ())
+
+    stack = [(start, [start])]
+    visited = set()
+
+    while stack:
+
+        state, path = stack.pop()
+
+        if state in visited:
+            continue
+
+        visited.add(state)
+
+        if state == goal:
+            print("Goal arrangement found!")
+            for step in path:
+                print(step)
+            return
+
+        for i in range(4):
+
+            if state[i]:
+
+                for j in range(4):
+
+                    if i != j:
+
+                        new_state = [list(s) for s in state]
+
+                        block = new_state[i].pop()
+                        new_state[j].append(block)
+
+                        new_state = tuple(tuple(s) for s in new_state)
+
+                        if new_state not in visited:
+                            stack.append((new_state, path + [new_state]))
+
+    print("No solution found")
+
+
+dfs()
